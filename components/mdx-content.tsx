@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import * as runtime from 'react/jsx-runtime'
 
 const sharedComponents = {
@@ -7,6 +8,21 @@ const sharedComponents = {
       {children}
     </article>
   ),
+  a: ({ href, children, ...props }: { href: string, children: React.ReactNode }) => {
+    return (
+      <Link href={href} className="text-primary/80 hover:text-primary/90 active:text-primary underline" {...props}>{children}</Link>
+    )
+  },
+  blockquote: ({ children, ...props }: { children: React.ReactNode }) => {
+    return (
+      <blockquote
+        className="pl-4 border-l-4 border-primary/40 text-muted-foreground italic my-1"
+        {...props}
+      >
+        {children}
+      </blockquote>
+    )
+  }
 }
 
 // parse the Velite generated MDX code into a React component function

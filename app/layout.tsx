@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes"
 
-const beVietnamPro = Be_Vietnam_Pro({
-  variable: "--font-be-vietnam-pro",
+const roboto = Roboto({
   subsets: ["latin", "vietnamese"],
-  weight: ["100", "300", "500", "600", "700", "800", "900"]
+  weight: ["100", "300", "400", "500", "800", "700", "900"],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -21,13 +21,13 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning
       lang="vi"
-      className={`${beVietnamPro.variable} h-full antialiased`}
+      className={`${roboto.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider>
+        <ThemeProvider attribute="class" defaultTheme="system">
           {children}
         </ThemeProvider>
       </body>
-    </html>
+    </html >
   );
 }

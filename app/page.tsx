@@ -13,6 +13,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useTheme } from "next-themes";
 
 const reviews = [
   {
@@ -30,22 +31,25 @@ const reviews = [
 ]
 export default function Home() {
   const [isClient, setIsClient] = useState(false)
+  const { theme, setTheme } = useTheme()
   const plugin = useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
   )
 
   useEffect(() => {
     setIsClient(true)
+    if (theme === 'dark')
+      setTheme('light')
   }, [])
   return (
     <>
       <Header />
-      <div className="space-y-8 pb-8">
+      <div className="space-y-8 pb-8 bg-white text-black">
 
         {/* HERO */}
         <section id="hero" className="bg-[#f8f8f8] p-8 md:p-16">
-          <div className="flex flex-col justify-between min-h-[70vh] md:flex-row-reverse md:items-center">
-            <div className="relative aspect-4/3 h-80 md:h-[70vh]">
+          <div className="flex flex-col justify-between min-h-[70vh] lg:flex-row-reverse md:items-center">
+            <div className="relative aspect-4/3 h-80 lg:h-[70vh]">
               <Image
                 src="/hero.png"
                 alt="hero"
@@ -71,7 +75,7 @@ export default function Home() {
 
         {/* BENEFITS */}
         <section className="px-8 md:px-16  space-y-6">
-          <h1>Nhóm chúng mình có gì?</h1>
+          <h1 className="border-none">Nhóm chúng mình có gì?</h1>
           <div className="space-y-4 md:grid md:grid-cols-2 gap-4">
             <div className="p-4 bg-zinc-100 rounded-lg space-y-2">
               <h2>Tri thức là vô giá</h2>
@@ -95,7 +99,7 @@ export default function Home() {
         {/* REVIEWS */}
         {isClient &&
           <section className="px-8 md:px-16 w-full flex flex-col gap-8">
-            <h1>Mọi người nghĩ gì về nhóm chúng mình?</h1>
+            <h1 className="border-none">Mọi người nghĩ gì về nhóm chúng mình?</h1>
             <Carousel
               plugins={[plugin.current]}
               opts={{
