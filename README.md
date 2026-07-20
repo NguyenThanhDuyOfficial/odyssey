@@ -1,89 +1,36 @@
-
 <!-- MARKDOWN LINKS & IMAGES -->
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [TypeScript]: https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
 [TypeScript-url]: https://www.typescriptlang.org/
-[Redux-Toolkit]: https://img.shields.io/badge/redux_toolkit-764ABC?style=for-the-badge&logo=redux&logoColor=white
-[Redux-Toolkit-url]: https://redux-toolkit.js.org/
 [TailwindCSS]: https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
 [TailwindCSS-url]: https://tailwindcss.com/
 [ShadCN-UI]: https://img.shields.io/badge/shadcn_ui-000000?style=for-the-badge&logo=shadcnui&logoColor=white
 [ShadCN-UI-url]: https://ui.shadcn.com/
 [Lucide-React]: https://img.shields.io/badge/lucide_react-F56565?style=for-the-badge&logo=lucide&logoColor=white
 [Lucide-React-url]: https://lucide.dev/
-[Nest.js]: https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white
-[Nest-url]: https://nestjs.com/
-[Prisma]: https://img.shields.io/badge/prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white
-[Prisma-url]: https://www.prisma.io/
-[PostgreSQL]: https://img.shields.io/badge/postgresql-4169E1?style=for-the-badge&logo=postgresql&logoColor=white
-[PostgreSQL-url]: https://www.postgresql.org/
-[JWT]: https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white
-[JWT-url]: https://jwt.io/
-[Passport]: https://img.shields.io/badge/passport-34E27A?style=for-the-badge&logo=passport&logoColor=white
-[Passport-url]: https://www.passportjs.org/
-[Bcrypt]: https://img.shields.io/badge/bcrypt-0052CC?style=for-the-badge&logo=bcrypt&logoColor=white
-[Bcrypt-url]: https://github.com/kelektiv/node.bcrypt.js
-[Zod]: https://img.shields.io/badge/zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white
-[Zod-url]: https://zod.dev/
-[Swagger]: https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black
-[Swagger-url]: https://swagger.io/
-[Throttler]: https://img.shields.io/badge/throttler-FF6B6B?style=for-the-badge&logo=nestjs&logoColor=white
-[Throttler-url]: https://github.com/nestjs/throttler
+[Velite]: https://img.shields.io/badge/velite-4B8BBE?style=for-the-badge&logo=velite&logoColor=white
+[Velite-url]: https://velite.js.org/
+[Catppuccin]: https://img.shields.io/badge/catppuccin-F5C2E7?style=for-the-badge&logo=catppuccin&logoColor=black
+[Catppuccin-url]: https://catppuccin.com/
 [Vercel]: https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
 [Vercel-url]: https://vercel.com/
-[Supabase]: https://img.shields.io/badge/supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white
-[Supabase-url]: https://supabase.com/
-[Render]: https://img.shields.io/badge/render-46E3B7?style=for-the-badge&logo=render&logoColor=black
-[Render-url]: https://render.com/
-[Docker]: https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
-[Docker-url]: https://www.docker.com/
-
 [product-screenshot]: images/screenshot.png
-[product-url]: https://carrentalcomps.vercel.app/
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+[product-url]: https://odyssey-group.vercel.app/
 
 <!-- PROJECT LOGO -->
 <div align="center">
   <h3 align="center">
-    <span style="color: #F97316;">Car.</span>
+    <span>Odyssey</span>
   </h3>
   <p align="center">
-    Rent your dream car in minutes.
+    Discord Study Group Website
     <br />
-    <a href="https://carrentalcomps.vercel.app/"><strong>View Demo</strong></a>
+    <a href="https://odyssey-group.vercel.app/"><strong>View Demo</strong></a>
     ·
-    <a href="https://github.com/NguyenThanhDuyOfficial/car/issues">Report Bug</a>
+    <a href="https://github.com/NguyenThanhDuyOfficial/odyssey/issues">Report Bug</a>
     ·
-    <a href="https://github.com/NguyenThanhDuyOfficial/car/issues">Request Feature</a>
+    <a href="https://github.com/NguyenThanhDuyOfficial/odyssey/issues">Request Feature</a>
   </p>
 </div>
 
@@ -117,17 +64,53 @@
 
 [![Product Screen Shot][product-screenshot]](product-url)
 
-**Car Rental Platform** is a full-stack web application that allows users to browse available cars, select rental dates, and complete orders seamlessly. The platform provides a smooth user experience with robust authentication and role-based access control.
+**Odyssey** is a modern landing page and content platform designed for Discord study communities. It serves as a central hub where members can:
+- 📖 Access comprehensive guides for using the Discord Community Group
+- ✍️ Read and share blog articles about knowledge and experiences
+- 👥 Connect with fellow learners in a structured environment
 
-**Key Features:**
-- 🚗 Browse and filter available cars
-- 📅 Select rental dates and durations
-- ✅ Complete orders with payment integration
-- 🔐 User authentication with JWT and role-based access (Admin/User)
-- 📊 Full CRUD operations for cars, orders, users, and payments
-- 📝 API documentation with Swagger
+### ✨ Key Features
 
-> **⚠️ Note:** This project is currently **paused**. Instead of focusing on a demo project, I want to dedicate more time to community-driven projects that create real impact. The project is nearly complete, with only the car filtering frontend component and UI/UX improvements remaining.
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" width="33%">
+        <br />
+        <strong>🎨</strong>
+        <br />
+        <strong>Full Landing Page</strong>
+        <br />
+        <sub>Modern, responsive design with seamless user experience</sub>
+        <br />
+        <br />
+      </td>
+      <td align="center" width="33%">
+        <br />
+        <strong>📝</strong>
+        <br />
+        <strong>MDX to HTML</strong>
+        <br />
+        <sub>Write content in MDX, render as beautiful HTML</sub>
+        <br />
+        <br />
+      </td>
+      <td align="center" width="33%">
+        <br />
+        <strong>🔐</strong>
+        <br />
+        <strong>Authentication</strong>
+        <br />
+        <sub>Secure registration, login & role-based access</sub>
+        <br />
+        <br />
+      </td>
+    </tr>
+  </table>
+</div>
+
+<br />
+
+> **⚠️ Important Note:** This project is currently in **demo phase** and under active development. Features may change, and some functionality might be incomplete. Please use with caution and feel free to contribute!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -136,125 +119,67 @@
 #### Frontend
 * [![Next][Next.js]][Next-url]
 * [![TypeScript][TypeScript]][TypeScript-url]
-* [![Redux Toolkit][Redux-Toolkit]][Redux-Toolkit-url]
 * [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
 * [![ShadCN UI][ShadCN-UI]][ShadCN-UI-url]
 * [![Lucide React][Lucide-React]][Lucide-React-url]
-
-#### Backend
-* [![Nest][Nest.js]][Nest-url]
-* [![Prisma][Prisma]][Prisma-url]
-* [![PostgreSQL][PostgreSQL]][PostgreSQL-url]
-* [![JWT][JWT]][JWT-url]
-* [![Passport][Passport]][Passport-url]
-* [![Bcrypt][Bcrypt]][Bcrypt-url]
-* [![Zod][Zod]][Zod-url]
-* [![Swagger][Swagger]][Swagger-url]
-* [![Throttler][Throttler]][Throttler-url]
+* [![Velite][Velite]][Velite-url]
+* [![Catppuccin][Catppuccin]][Catppuccin-url]
 
 #### DevOps & Deployment
 * [![Vercel][Vercel]][Vercel-url]
-* [![Supabase][Supabase]][Supabase-url]
-* [![Render][Render]][Render-url]
-* [![Docker][Docker]][Docker-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
 To get a local copy up and running, follow these steps.
+
 ### Prerequisites
 
-* **pnpm**
+* **npm**
   ```sh
-  npm install -g pnpm
+  npm install -g npm
   ```
-
-* [OPTIONAL] **Docker**: Make sure you have **Docker** installed and running on your system.
-  ```sh
-  docker --version
-  docker compose version
-  ```
-
-### One-Line Command
-
-```sh
-npm install -g pnpm &&
-git clone https://github.com/NguyenThanhDuyOfficial/car.git &&
-cd car &&
-pnpm install &&
-cp api/.env.example api/.env &&
-cp web/.env.example web/.env &&
-cd api && docker compose up -d &&
-npx prisma generate &&
-npx prisma migrate dev --name init &&
-cd .. &&
-pnpm dev
-```
-
-> **📌 Note:** After running `pnpm dev`, the application will start. You can then access:
-> - **Frontend:** http://localhost:3000
-> - **API Docs (Swagger):** http://localhost:3001/api/docs
-
-
 
 ### Installation
 
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/NguyenThanhDuyOfficial/car.git
-   cd car
+   git clone https://github.com/NguyenThanhDuyOfficial/odyssey.git
+   cd odyssey
    ```
 
 2. **Install dependencies**
    ```sh
-   pnpm install
+   npm install
    ```
 
-3. **Set up environment variables**
+3. **Start the development server**
    ```sh
-   # Backend
-   cp api/.env.example api/.env
-   
-   # Frontend
-   cp web/.env.example web/.env
-   ```
-
-4. **[Optional] Run local database with Docker**
-   ```sh
-   cd api && docker compose up -d
-   ```
-5. Generate Prisma
-    ```sh
-    npx prisma generate
-    npx prisma migrate dev --name init
-    ```
-
-6. **Start the development server**
-   ```sh
-   pnpm dev
+   npm run dev
    ```
 
    The application will be available at:
    - **Frontend:** [http://localhost:3000](http://localhost:3000)
-   - **Backend API:** [http://localhost:3001/api/v1](http://localhost:3001/api/v1)
-   - **API Documentation (Swagger):** [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
+
+> **📌 Note:** If you prefer a one-line setup, you can use:
+> ```sh
+> git clone https://github.com/NguyenThanhDuyOfficial/odyssey.git && cd odyssey && npm install && npm run dev
+> ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] User authentication (JWT + Passport)
-- [x] Car management (CRUD)
-- [x] Order management (CRUD)
-- [x] User management (CRUD)
-- [x] Payment integration
-- [x] Role-based access control
+- [x] Add HomePage
+- [x] Add GuidePage
+- [x] Add BlogPage
+- [ ] User authentication
+- [ ] Blog API
 
-See the [open issues](https://github.com/NguyenThanhDuyOfficial/car/issues) for a full list of proposed features and known issues.
+See the [open issues](https://github.com/NguyenThanhDuyOfficial/odyssey/issues) for a full list of proposed features and known issues.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -285,8 +210,8 @@ Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
 
 **Nguyen Thanh Duy**  
 📧 Gmail: nguyenthanhduyofficial@gmail.com  
-🔗 Project Link: [https://github.com/NguyenThanhDuyOfficial/car](https://github.com/NguyenThanhDuyOfficial/car)  
-🌐 Live Demo: [https://carrentalcomps.vercel.app/](https://carrentalcomps.vercel.app/)
+🔗 Project Link: [https://github.com/NguyenThanhDuyOfficial/odyssey](https://github.com/NguyenThanhDuyOfficial/odyssey)  
+🌐 Live Demo: [https://odyssey-group.vercel.app/](https://odyssey-group.vercel.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -300,6 +225,6 @@ These resources were helpful during development:
 * [GitHub Pages](https://pages.github.com)
 * [React Icons](https://react-icons.github.io/react-icons/search)
 * [Next.js Documentation](https://nextjs.org/docs)
-* [NestJS Documentation](https://docs.nestjs.com/)
+* [Velite Documentation](https://velite.js.org/docs)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
