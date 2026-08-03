@@ -1,14 +1,17 @@
-
 import { blogs } from "@/.velite";
 import { MDXContent } from "@/components/mdx-content";
 import Header from "@/components/page/Header";
 import Sidebar from "@/components/page/Sidebar";
 import { notFound } from "next/navigation";
 
-export default async function blogPage({ params }: { params: { slug: string } }) {
-  const param = await params
-  const blog = blogs.find(blog => blog.slug === param.slug)
-  if (blog === null || !blog) notFound()
+export default async function blogPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const param = await params;
+  const blog = blogs.find((blog) => blog.slug === param.slug);
+  if (blog === null || !blog) notFound();
 
   return (
     <>
@@ -20,5 +23,5 @@ export default async function blogPage({ params }: { params: { slug: string } })
         </main>
       </div>
     </>
-  )
+  );
 }

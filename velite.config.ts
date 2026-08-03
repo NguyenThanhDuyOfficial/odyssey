@@ -1,37 +1,34 @@
-import { defineConfig, s, defineCollection } from 'velite'
-
+import { defineConfig, s, defineCollection } from "velite";
 
 const wikis = defineCollection({
   name: "wiki",
-  pattern: 'wiki/**/*.mdx',
+  pattern: "wiki/**/*.mdx",
   schema: s
     .object({
       title: s.string().max(99),
-      slug: s.slug('wiki'),
+      slug: s.slug("wiki"),
       code: s.mdx(),
-      priority: s.number()
+      priority: s.number(),
     })
-    .transform(data => ({ ...data, permalink: `/wiki/${data.slug}` }))
-})
+    .transform((data) => ({ ...data, permalink: `/wiki/${data.slug}` })),
+});
 
 const blogs = defineCollection({
   name: "blog",
-  pattern: 'blog/**/*.mdx',
+  pattern: "blog/**/*.mdx",
   schema: s
     .object({
       title: s.string().max(99),
-      slug: s.slug('blog'),
+      slug: s.slug("blog"),
       code: s.mdx(),
-      priority: s.number()
+      priority: s.number(),
     })
-    .transform(data => ({ ...data, permalink: `/blog/${data.slug}` }))
-})
-
-
-
+    .transform((data) => ({ ...data, permalink: `/blog/${data.slug}` })),
+});
 
 export default defineConfig({
   collections: {
-    wikis, blogs
-  }
-})
+    wikis,
+    blogs,
+  },
+});

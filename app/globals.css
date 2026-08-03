@@ -3,7 +3,6 @@
 @import "shadcn/tailwind.css";
 @import "@catppuccin/palette/css/catppuccin.css";
 
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -51,34 +50,33 @@
 }
 
 :root {
-  /* Latte theme */
-  --background: var(--ctp-latte-base);
-  --foreground: var(--ctp-latte-text);
-  --card: var(--ctp-latte-mantle);
-  --card-foreground: var(--ctp-latte-text);
-  --popover: var(--ctp-latte-mantle);
-  --popover-foreground: var(--ctp-latte-text);
-  --primary: var(--ctp-latte-blue);
-  --primary-foreground: var(--ctp-latte-base);
-  --secondary: var(--ctp-latte-surface0);
-  --secondary-foreground: var(--ctp-latte-text);
-  --muted: var(--ctp-latte-surface0);
-  --muted-foreground: var(--ctp-latte-subtext0);
-  --accent: var(--ctp-latte-surface1);
-  --accent-foreground: var(--ctp-latte-text);
-  --destructive: var(--ctp-latte-red);
-  --border: var(--ctp-latte-surface0);
-  --input: var(--ctp-latte-surface0);
-  --ring: var(--ctp-latte-blue);
+  --background: #ffffff;
+  --foreground: oklch(14.1% 0.005 285.823);
+  --card: oklch(98.5% 0 none);
+  --card-foreground: oklch(21% 0.006 285.885);
+  --popover: oklch(98.5% 0 none);
+  --popover-foreground: oklch(21% 0.006 285.885);
+  --primary: oklch(70.7% 0.165 254.624);
+  --primary-foreground: #ffffff;
+  --secondary: oklch(87.9% 0.169 91.605);
+  --secondary-foreground: #ffffff;
+  --muted: oklch(55.2% 0.016 285.938);
+  --muted-foreground: oklch(55.2% 0.016 285.938);
+  --accent: oklch(87.9% 0.169 91.605);
+  --accent-foreground: var(--background);
+  --destructive: oklch(80.8% 0.114 19.571);
+  --border: oklch(44.2% 0.017 285.786);
+  --input: oklch(55.2% 0.016 285.938);
+  --ring: var(--primary);
   --radius: 0.625rem;
-  --sidebar: var(--ctp-latte-mantle);
-  --sidebar-foreground: var(--ctp-latte-text);
-  --sidebar-primary: var(--ctp-latte-blue);
-  --sidebar-primary-foreground: var(--ctp-latte-base);
-  --sidebar-accent: var(--ctp-latte-surface0);
-  --sidebar-accent-foreground: var(--ctp-latte-text);
-  --sidebar-border: var(--ctp-latte-surface0);
-  --sidebar-ring: var(--ctp-latte-blue);
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--card);
+  --sidebar-ring: var(--card);
 }
 
 .dark {
@@ -120,13 +118,24 @@
     @apply bg-background text-foreground;
   }
   h1 {
-    @apply text-3xl font-bold border-b border-foreground;
+    @apply text-4xl font-medium;
   }
   h2 {
-    @apply text-2xl font-bold border-b border-foreground;
+    @apply text-3xl font-medium;
   }
   h3 {
-    @apply text-xl font-bold border-b border-foreground;
+    @apply text-2xl font-medium;
+  }
+  h4 {
+    @apply text-xl font-medium;
+  }
+  h5 {
+    @apply text-lg font-medium;
+  }
+  h6 {
+    @apply text-base font-medium;
+  }
+  blockquote {
+    @apply border-l-4 border-blue-500 pl-4 italic py-2 px-4 rounded-r-md bg-zinc-200;
   }
 }
-

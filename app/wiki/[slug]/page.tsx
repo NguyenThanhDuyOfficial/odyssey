@@ -4,10 +4,14 @@ import Header from "@/components/page/Header";
 import Sidebar from "@/components/page/Sidebar";
 import { notFound } from "next/navigation";
 
-export default async function WikiPage({ params }: { params: { slug: string } }) {
-  const param = await params
-  const wiki = wikis.find(wiki => wiki.slug === param.slug)
-  if (wiki === null || !wiki) notFound()
+export default async function WikiPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const param = await params;
+  const wiki = wikis.find((wiki) => wiki.slug === param.slug);
+  if (wiki === null || !wiki) notFound();
 
   return (
     <>
@@ -19,5 +23,5 @@ export default async function WikiPage({ params }: { params: { slug: string } })
         </main>
       </div>
     </>
-  )
+  );
 }

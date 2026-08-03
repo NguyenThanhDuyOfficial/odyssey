@@ -1,4 +1,5 @@
 <!-- MARKDOWN LINKS & IMAGES -->
+
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [TypeScript]: https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
@@ -60,11 +61,13 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 [![Product Screen Shot][product-screenshot]](product-url)
 
 **Odyssey** is a modern landing page and content platform designed for Discord study communities. It serves as a central hub where members can:
+
 - 📖 Access comprehensive guides for using the Discord Community Group
 - ✍️ Read and share blog articles about knowledge and experiences
 - 👥 Connect with fellow learners in a structured environment
@@ -117,27 +120,30 @@
 ### Built With
 
 #### Frontend
-* [![Next][Next.js]][Next-url]
-* [![TypeScript][TypeScript]][TypeScript-url]
-* [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
-* [![ShadCN UI][ShadCN-UI]][ShadCN-UI-url]
-* [![Lucide React][Lucide-React]][Lucide-React-url]
-* [![Velite][Velite]][Velite-url]
-* [![Catppuccin][Catppuccin]][Catppuccin-url]
+
+- [![Next][Next.js]][Next-url]
+- [![TypeScript][TypeScript]][TypeScript-url]
+- [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
+- [![ShadCN UI][ShadCN-UI]][ShadCN-UI-url]
+- [![Lucide React][Lucide-React]][Lucide-React-url]
+- [![Velite][Velite]][Velite-url]
+- [![Catppuccin][Catppuccin]][Catppuccin-url]
 
 #### DevOps & Deployment
-* [![Vercel][Vercel]][Vercel-url]
+
+- [![Vercel][Vercel]][Vercel-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 To get a local copy up and running, follow these steps.
 
 ### Prerequisites
 
-* **npm**
+- **npm**
   ```sh
   npm install -g npm
   ```
@@ -145,17 +151,20 @@ To get a local copy up and running, follow these steps.
 ### Installation
 
 1. **Clone the repository**
+
    ```sh
    git clone https://github.com/NguyenThanhDuyOfficial/odyssey.git
    cd odyssey
    ```
 
 2. **Install dependencies**
+
    ```sh
    npm install
    ```
 
 3. **Start the development server**
+
    ```sh
    npm run dev
    ```
@@ -164,6 +173,7 @@ To get a local copy up and running, follow these steps.
    - **Frontend:** [http://localhost:3000](http://localhost:3000)
 
 > **📌 Note:** If you prefer a one-line setup, you can use:
+>
 > ```sh
 > git clone https://github.com/NguyenThanhDuyOfficial/odyssey.git && cd odyssey && npm install && npm run dev
 > ```
@@ -171,6 +181,7 @@ To get a local copy up and running, follow these steps.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
+
 ## Roadmap
 
 - [x] Add HomePage
@@ -184,6 +195,7 @@ See the [open issues](https://github.com/NguyenThanhDuyOfficial/odyssey/issues) 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -199,6 +211,7 @@ If you have a suggestion that would make this better, please fork the repo and c
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
@@ -206,6 +219,7 @@ Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
+
 ## Contact
 
 **Nguyen Thanh Duy**  
@@ -216,15 +230,16 @@ Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
 These resources were helpful during development:
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-* [Next.js Documentation](https://nextjs.org/docs)
-* [Velite Documentation](https://velite.js.org/docs)
+- [Choose an Open Source License](https://choosealicense.com)
+- [Img Shields](https://shields.io)
+- [GitHub Pages](https://pages.github.com)
+- [React Icons](https://react-icons.github.io/react-icons/search)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Velite Documentation](https://velite.js.org/docs)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

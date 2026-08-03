@@ -7,7 +7,9 @@
     "build": "concurrently 'npx velite build' 'next build'",
     "start": "next start",
     "lint": "eslint",
-    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
+    "prepare": "husky",
+    "test": "echo 'add test'"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -34,17 +36,24 @@
   },
   "devDependencies": {
     "@catppuccin/tailwindcss": "^1.0.0",
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "concurrently": "^10.0.3",
-    "eslint": "^9",
+    "eslint": "^9.39.5",
     "eslint-config-next": "16.2.10",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.8.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
     "pagefind": "^1.5.2",
+    "prettier": "3.9.6",
     "tailwindcss": "^4",
     "typescript": "^5",
+    "typescript-eslint": "^8.65.0",
     "velite": "^0.4.0"
   }
 }
