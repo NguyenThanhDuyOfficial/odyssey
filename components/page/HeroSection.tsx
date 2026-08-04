@@ -30,7 +30,7 @@ export default function HeroSection() {
           <p className="max-w-50 md:max-w-screen">
             Cộng đồng học tập, giúp đỡ và phát triển bản thân.
           </p>
-          <Button variant="default" className="max-w-40">
+          <Button variant="default" size="lg" className="max-w-40 md:mt-8">
             <Link href="https://discord.gg/SWYkNVdXd9">Tham gia ngay</Link>
           </Button>
         </div>

@@ -13,7 +13,7 @@ export default function BlogCard({
   type: any;
 }) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 w-full max-w-100">
       <Link href={href} className="relative w-full aspect-video ">
         <Image
           src={src}

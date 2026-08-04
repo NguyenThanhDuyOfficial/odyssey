@@ -1,17 +1,44 @@
 "use client";
+
+import { Menu, MenuIcon, XIcon } from "lucide-react";
 import Link from "next/link";
-import { MenuIcon, XIcon } from "lucide-react";
-import { Button } from "../ui/button";
-import { useState } from "react";
-import { wikis } from "@/.velite";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-10 left-0 p-4 md:p-6 h-20 border-b border-zinc-300 flex justify-between items-center bg-background">
-      <Link href="/" className="text-2xl font-bold link">
+    <header
+      className={`sticky text-black top-0 left-0 z-50 h-16 w-full p-4 px-8 md:px-16 flex justify-between items-center transistion-color duration-300 ${isScrolled ? "bg-zinc-50" : "bg-transparent"}`}
+    >
+      <Link href="/" className="text-xl font-medium" aria-label="go to home">
         Odyssey
       </Link>
+      <div className="hidden md:block space-x-8">
+        <Link className="link" href="/wiki/wiki" aria-label="go to wiki">
+          Hướng dẫn
+        </Link>
+        <Link className="link" href="/blog/blog" aria-label="go to blog">
+          Bài Blogs
+        </Link>
+      </div>
       <Button
         className="md:hidden"
         variant="ghost"
@@ -25,19 +52,24 @@ export default function Header() {
           <MenuIcon className="w-6! h-6!" />
         )}
       </Button>
+      {/* <div className="space-x-4 hidden md:block"> */}
+      {/*   <Link className="link" href=""> */}
+      {/*     Tham gia */}
+      {/*   </Link> */}
+      {/*   <Button variant="ghost">Đăng nhập</Button> */}
+      {/* </div> */}
 
       <div
-        className={`fixed top-16 right-0 w-full h-[calc(100vh-4rem)] bg-background p-8 rounded-bl-lg
-${isOpen ? "max-h-[calc(100vh-4rem] opacity-100" : "max-h-0 opacity-0 hidden"}`}
+        className={`fixed top-16 right-0 w-fit h-fit bg-zinc-100 p-8 rounded-bl-lg
+${isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}
       >
         <div className="flex flex-col gap-4 justify-center items-center">
-          {wikis.map((wiki, index) => (
-            <Button key={index} variant="ghost" className="w-full rounded-xs">
-              <Link className="link" href={wiki.permalink}>
-                {wiki.title}
-              </Link>
-            </Button>
-          ))}
+          <Link className="link" href="/wiki/wiki" aria-label="go to wiki">
+            Hướng dẫn
+          </Link>
+          <Link className="link" href="/blog/blog" aria-label="go to blog">
+            Bài Blogs
+          </Link>
         </div>
       </div>
     </header>
