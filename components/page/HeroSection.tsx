@@ -9,12 +9,12 @@ export default function HeroSection() {
         className="min-h-[80vh] flex flex-col justify-between py-10
         lg:flex-row-reverse md:items-center"
       >
-        <div className="relative aspect-4/3 h-80 lg:h-[70vh]">
+        <div className="relative aspect-square h-80 lg:h-[70vh] ">
           <Image
-            src="/hero.jpg"
+            src="/landing/hero.png"
             alt="hero"
             fill
-            className="object-cover"
+            className="object-cover "
             loading="eager"
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

@@ -32,7 +32,7 @@ export default function Header() {
         Odyssey
       </Link>
       <div className="hidden md:block space-x-8">
-        <Link className="link" href="/wiki/wiki" aria-label="go to wiki">
+        <Link className="link" href="/docs" aria-label="go to wiki">
           Hướng dẫn
         </Link>
         <Link className="link" href="/blog/blog" aria-label="go to blog">
@@ -64,7 +64,7 @@ export default function Header() {
 ${isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}
       >
         <div className="flex flex-col gap-4 justify-center items-center">
-          <Link className="link" href="/wiki/wiki" aria-label="go to wiki">
+          <Link className="link" href="/docs" aria-label="go to wiki">
             Hướng dẫn
           </Link>
           <Link className="link" href="/blog/blog" aria-label="go to blog">

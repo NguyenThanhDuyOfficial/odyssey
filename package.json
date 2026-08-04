@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently 'next dev --turbo' 'npx velite dev --watch'",
+    "dev": "next dev --turbo",
     "build": "concurrently 'npx velite build' 'next build'",
     "start": "next start",
     "lint": "eslint",
@@ -19,8 +19,9 @@
     "clsx": "^2.1.1",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
-    "fumadocs-core": "^16.11.4",
-    "fumadocs-mdx": "^15.1.1",
+    "fumadocs-core": "^16.14.0",
+    "fumadocs-mdx": "^15.2.2",
+    "fumadocs-ui": "^16.14.0",
     "lucide": "^1.24.0",
     "lucide-react": "^1.24.0",
     "mdx-content": "^0.0.2",
@@ -53,7 +54,6 @@
     "prettier": "3.9.6",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "typescript-eslint": "^8.65.0",
-    "velite": "^0.4.0"
+    "typescript-eslint": "^8.65.0"
   }
 }
