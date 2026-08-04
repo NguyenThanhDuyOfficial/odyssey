@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "concurrently 'npx velite build' 'next build'",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
