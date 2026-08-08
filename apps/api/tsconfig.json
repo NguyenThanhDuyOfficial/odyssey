@@ -21,6 +21,8 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": { "@/*": ["src/*"] }
-  }
+    "paths": { "@modules/*": ["src/modules/*"] }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
