@@ -1,18 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from './modules/auth/auth.module';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
+import { AuthModule } from './modules/auth/auth.module.js';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaService } from './modules/prisma/prisma.service.js';
+import { UserService } from './modules/user/user.service.js';
+import { AuthService } from './modules/auth/auth.service.js';
+import path from 'node:path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '../../../.env',
+      envFilePath: path.resolve(process.cwd(), '../../.env'),
     }),
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService, UserService, AuthService],
 })
 export class AppModule {}

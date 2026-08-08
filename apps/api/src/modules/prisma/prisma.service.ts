@@ -15,13 +15,9 @@ export class PrismaService
     super({ adapter });
   }
 
-  async onModuleInit() {
-    await this.$connect();
-  }
+  async onModuleInit() {}
 
-  async onModuleDestroy() {
-    await this.$disconnect();
-  }
+  async onModuleDestroy() {}
 
   // Helper method for clean database (useful for testing)
   async cleanDatabase() {

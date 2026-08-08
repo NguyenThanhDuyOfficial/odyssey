@@ -3,8 +3,8 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { User, Prisma } from '../../generated/prisma/client';
+import { PrismaService } from '../prisma/prisma.service.js';
+import { User, Prisma } from '../../generated/prisma/client.js';
 
 @Injectable()
 export class UserService {
@@ -24,6 +24,9 @@ export class UserService {
     }
   }
 
+  async findOne(where: Prisma.UserWhereUniqueInput): Promise<User | null> {
+    return await this.prisma.user.findUnique({ where: where });
+  }
   // Get all users
   async getAllUsers(params?: {
     skip?: number;
@@ -53,13 +56,6 @@ export class UserService {
     }
 
     return user;
-  }
-
-  // Get a user by email
-  async getUserByEmail(email: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({
-      where: { email },
-    });
   }
 
   // Update a user
