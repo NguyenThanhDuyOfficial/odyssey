@@ -1,5 +1,5 @@
 export class CreateDiscordUserDto {
-  displayName?: string;
+  displayName: string | null = null;
   username!: string;
   discordAvatar: string | null = null;
   discordEmail?: string;

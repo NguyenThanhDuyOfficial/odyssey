@@ -15,9 +15,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@repo/*": ["./apps/*/src", "./packages/*/src"],
-      "@web/*": ["./apps/web/src/*"],
-      "@api/*": ["./apps/api/src/*"]
+      "@repo/*": ["./apps/*/src", "./packages/*/src"]
     }
   },
   "exclude": [

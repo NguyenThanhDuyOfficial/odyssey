@@ -5,12 +5,16 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const { loginWithDiscord, isAuthenticated, user, logout } = useAuth();
+
   useEffect(() => {
+    console.log(user);
     const handleScroll = () => {
       if (window.scrollY > 200) {
         setIsScrolled(true);
@@ -23,7 +27,12 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+  const handleLogout = async () => {
+    logout();
+  };
+  const handleLogin = async () => {
+    loginWithDiscord();
+  };
   return (
     <header
       className={`sticky text-black top-0 left-0 z-50 h-16 w-full p-4 px-8 md:px-16 flex justify-between items-center transistion-color duration-300 ${isScrolled ? "bg-zinc-50" : "bg-transparent"}`}
@@ -72,6 +81,16 @@ ${isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}
           </Link>
         </div>
       </div>
+      {isAuthenticated ? (
+        <div>
+          <p>{user?.name}</p>
+          <Button onClick={handleLogout}>Đăng xuất</Button>
+        </div>
+      ) : (
+        <div>
+          <Button onClick={handleLogin}>Đăng nhập</Button>
+        </div>
+      )}
     </header>
   );
 }

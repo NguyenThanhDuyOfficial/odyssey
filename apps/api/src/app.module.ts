@@ -7,6 +7,7 @@ import { PrismaService } from './modules/prisma/prisma.service.js';
 import { UserService } from './modules/user/user.service.js';
 import { AuthService } from './modules/auth/auth.service.js';
 import path from 'node:path';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import path from 'node:path';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService, UserService, AuthService],
+  providers: [AppService, PrismaService, UserService, AuthService, JwtService],
 })
 export class AppModule {}
