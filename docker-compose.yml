@@ -33,7 +33,7 @@ services:
   # ============================================
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: blog_pgadmin
+    container_name: pgadmin
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@mail.com}

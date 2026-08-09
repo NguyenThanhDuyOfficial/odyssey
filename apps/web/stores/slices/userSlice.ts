@@ -3,9 +3,13 @@ import { AuthStore } from "../useAuthStore";
 
 export interface User {
   id: string;
+  username: string;
   email: string;
-  name: string;
-  avatar?: string;
+  displayName: string;
+  discordAvatar: string;
+  discordId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface UserSlice {
