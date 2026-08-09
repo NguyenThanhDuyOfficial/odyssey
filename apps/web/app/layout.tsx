@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Roboto, Playwrite_VN } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { RootProvider } from "fumadocs-ui/provider/next";

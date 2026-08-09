@@ -51,6 +51,29 @@ export default function Header() {
           Bài Blogs
         </Link>
       </div>
+
+      {isAuthenticated ? (
+        <div className="relative group">
+          <div className="flex items-center gap-2">
+            <p className="text-lg">{user!.displayName}</p>
+            <DiscordAvatar
+              discordId={user!.discordId}
+              avatar={user!.discordAvatar}
+              size={32}
+              className=""
+            ></DiscordAvatar>
+          </div>
+          <div className="absolute top-12 right-0 p-4 flex flex-col bg-background rounded-b-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div>
+              <Button onClick={handleLogout}>Đăng xuất</Button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <Button onClick={handleLogin}>Đăng nhập</Button>
+        </div>
+      )}
       <Button
         className="md:hidden"
         variant="ghost"
@@ -84,28 +107,6 @@ ${isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}
           </Link>
         </div>
       </div>
-      {isAuthenticated ? (
-        <div className="relative group">
-          <div className="flex items-center gap-2">
-            <p className="text-lg">{user!.displayName}</p>
-            <DiscordAvatar
-              discordId={user!.discordId}
-              avatar={user!.discordAvatar}
-              size={32}
-              className=""
-            ></DiscordAvatar>
-          </div>
-          <div className="absolute top-12 right-0 p-4 flex flex-col bg-background rounded-b-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-            <div>
-              <Button onClick={handleLogout}>Đăng xuất</Button>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div>
-          <Button onClick={handleLogin}>Đăng nhập</Button>
-        </div>
-      )}
     </header>
   );
 }
