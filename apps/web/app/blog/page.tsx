@@ -5,8 +5,10 @@ import { posts, getFeaturedPosts, getLatestPosts } from "@/app/blog/posts";
 import Form from "next/form";
 import { italianno, playwrite } from "../fonts";
 import { BlogCard } from "@/components/page/blog/BlogCard";
+import { useRouter } from "next/navigation";
 
 export default function BlogPage() {
+  const router = useRouter();
   return (
     <>
       <Header></Header>
@@ -20,23 +22,26 @@ export default function BlogPage() {
             Nơi bạn dùng sự nhiệt huyết để học hỏi và chia sẻ những trải nghiệm
             độc nhất, kiến thức thú vị cho mọi người và cho bản thân.
           </p>
-          <Form
-            action="/search"
-            className="border-2 border-primary rounded-lg overflow-hidden"
-          >
-            <input
-              className="flex-1 p-2 outline-none"
-              name="query"
-              type="text"
-              placeholder="Tìm kiếm..."
-            />
-            <button
-              type="submit"
-              className="h-full p-2 rounded-none bg-primary text-primary-foreground hover:bg-primary/80"
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+            <Form
+              action="/search"
+              className="border-2 border-primary rounded-lg overflow-hidden"
             >
-              Tìm
-            </button>
-          </Form>
+              <input
+                className="flex-1 p-2 outline-none"
+                name="query"
+                type="text"
+                placeholder="Tìm kiếm..."
+              />
+              <button
+                type="submit"
+                className="h-full p-2 rounded-none bg-primary text-primary-foreground hover:bg-primary/80"
+              >
+                Tìm
+              </button>
+            </Form>
+            <Button onClick={() => router.push("/blog/new")}>Đăng bài</Button>
+          </div>
         </section>
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {posts.map((post) => (

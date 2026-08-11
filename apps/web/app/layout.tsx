@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Roboto, Playwrite_VN } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { RootProvider } from "fumadocs-ui/provider/next";
 
 const roboto = Roboto({
   subsets: ["latin", "vietnamese"],
@@ -27,7 +26,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="light">
-          <RootProvider>{children}</RootProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>

@@ -157,3 +157,9 @@
     @apply border-l-4 border-blue-500 pl-4 italic py-2 px-4 rounded-r-md bg-zinc-200;
   }
 }
+@layer components {
+  .tiptap p.is-editor-empty:first-child::before {
+    @apply text-gray-400 float-left h-0 pointer-events-none;
+    content: attr(data-placeholder);
+  }
+}

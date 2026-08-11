@@ -17,7 +17,6 @@ export default function Header() {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    console.log("header", user);
     const handleScroll = () => {
       if (window.scrollY > 200) {
         setIsScrolled(true);
