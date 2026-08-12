@@ -52,7 +52,7 @@ export default function Header() {
       </div>
 
       {isAuthenticated ? (
-        <div className="relative group">
+        <div className="relative group z-100">
           <div className="flex items-center gap-2">
             <p className="text-lg">{user!.displayName}</p>
             <DiscordAvatar

@@ -8,6 +8,8 @@ import { UserService } from './modules/user/user.service.js';
 import { AuthService } from './modules/auth/auth.service.js';
 import path from 'node:path';
 import { JwtService } from '@nestjs/jwt';
+import { BlogModule } from './modules/blog/blog.module.js';
+import { UserModule } from './modules/user/user.module.js';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { JwtService } from '@nestjs/jwt';
       envFilePath: path.resolve(process.cwd(), '../../.env'),
     }),
     AuthModule,
+    BlogModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, UserService, AuthService, JwtService],

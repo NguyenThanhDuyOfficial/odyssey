@@ -49,7 +49,7 @@ class HttpClient {
   private getToken(): string | null {
     // Lấy token từ localStorage (client-side) hoặc cookie
     if (typeof window !== "undefined") {
-      return localStorage.getItem("accessToken");
+      return localStorage.getItem("access_token");
     }
     return null;
   }

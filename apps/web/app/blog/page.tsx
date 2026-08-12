@@ -1,14 +1,67 @@
 "use client";
 import Header from "@/components/page/Header";
 import { Button } from "@/components/ui/button";
-import { posts, getFeaturedPosts, getLatestPosts } from "@/app/blog/posts";
 import Form from "next/form";
 import { italianno, playwrite } from "../fonts";
 import { BlogCard } from "@/components/page/blog/BlogCard";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { blogService } from "@/services/blogService";
+import { use, useEffect } from "react";
+import { useBlogStore } from "@/stores/useBlogStore";
 
-export default function BlogPage() {
+export default function BlogPage({
+  searchParams,
+}: {
+  searchParams: {
+    page?: string;
+    limit?: string;
+    tag?: string;
+    category?: string;
+    search?: string;
+    orderBy?: string;
+  };
+}) {
+  const params: any = use(searchParams as any);
   const router = useRouter();
+  const pathname = usePathname();
+  const page = parseInt(params.page || "1");
+  const search = params.search || "";
+  const tag = params.tag || "";
+  const category = params.category || "";
+  const orderBy = (params.orderBy || "newest") as
+    "newest" | "oldest" | "popular";
+
+  const {
+    posts,
+    meta,
+    tags,
+    categories,
+    filters,
+    isLoading,
+    error,
+    fetchPosts,
+    fetchTags,
+    fetchCategories,
+    setFilters,
+    resetFilters,
+  } = useBlogStore();
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (filters.search) params.set("search", filters.search);
+    if (filters.tag) params.set("tag", filters.tag);
+    if (filters.category) params.set("category", filters.category);
+    if (filters.orderBy && filters.orderBy !== "newest")
+      params.set("orderBy", filters.orderBy);
+    if (filters.page > 1) params.set("page", String(filters.page));
+
+    const newUrl = `${pathname}?${params.toString()}`;
+    if (window.location.pathname + window.location.search !== newUrl) {
+      router.push(newUrl);
+    }
+
+    fetchPosts();
+  }, [filters, fetchPosts, router, pathname]);
+
   return (
     <>
       <Header></Header>

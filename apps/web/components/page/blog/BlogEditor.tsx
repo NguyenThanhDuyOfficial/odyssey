@@ -12,11 +12,20 @@ import Highlight from "@tiptap/extension-highlight";
 import Color from "@tiptap/extension-color";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import { Toolbar } from "./Toolbar";
+import { useState } from "react";
 interface BlogEditorProps {
   content?: string;
-  onChange?: (content: string) => void;
+  onChange?: (data: { title: string; content: string }) => void;
+  onTitleChange?: (content: string) => void;
+  onContentChange?: (title: string) => void;
 }
-export function BlogEditor({ content = "", onChange }: BlogEditorProps) {
+export function BlogEditor({
+  content = "",
+  onChange,
+  onTitleChange,
+  onContentChange,
+}: BlogEditorProps) {
+  const [title, setTitle] = useState("");
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -39,9 +48,17 @@ export function BlogEditor({ content = "", onChange }: BlogEditorProps) {
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      onChange?.(html);
+      onContentChange?.(html);
+      onChange?.({ title, content: html });
     },
   });
+
+  const handleTitleChange = (e: any) => {
+    const newTitle = e.target.value;
+    setTitle(newTitle);
+    onTitleChange?.(newTitle);
+    onChange?.({ title: newTitle, content: editor?.getHTML() || "" });
+  };
 
   if (!editor) {
     return (
@@ -56,14 +73,18 @@ export function BlogEditor({ content = "", onChange }: BlogEditorProps) {
   return (
     <div>
       <Toolbar editor={editor} />
-      <input
-        id="title"
-        type="text"
-        placeholder="Tiêu đề"
-        required
-        className="border-none rounded-none text-3xl font-bold outline-none"
-      />
-      <EditorContent editor={editor} />
+      <div className="p-4 space-y-4">
+        <input
+          id="title"
+          type="text"
+          placeholder="Tiêu đề"
+          required
+          value={title}
+          onChange={handleTitleChange}
+          className="border-none rounded-none text-3xl font-bold outline-none"
+        />
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 }
