@@ -6,7 +6,8 @@ class HttpClient {
 
   private constructor() {
     this.client = axios.create({
-      baseURL: process.env.BACKEND_URL || "http://localhost:3001/api",
+      baseURL:
+        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001/api",
       timeout: 30000,
       headers: {
         "Content-Type": "application/json",
