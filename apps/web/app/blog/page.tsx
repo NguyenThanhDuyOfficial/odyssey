@@ -60,6 +60,7 @@ export default function BlogPage({
     }
 
     fetchPosts();
+    console.log(posts);
   }, [filters, fetchPosts, router, pathname]);
 
   return (
