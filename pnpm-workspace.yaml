@@ -1,4 +1,9 @@
+packages:
+  - "apps/*"
+  - "packages/*"
 allowBuilds:
+  '@prisma/engines': true
+  '@scarf/scarf': true
   esbuild: true
-  sharp: true
+  prisma: true
   unrs-resolver: true

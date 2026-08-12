@@ -1,0 +1,274 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String  @id @default(cuid())
+  email       String?
+  username    String  @unique
+  displayName String?
+  avatarUrl   String?
+
+  // Discord OAuth fields
+  discordId     String?   @unique
+  discordEmail  String?
+  discordAvatar String?
+  accessToken   String?   @db.Text
+  refreshToken  String?   @db.Text
+  tokenExpiry   DateTime?
+
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+  emailVerified Boolean   @default(false)
+
+  // Relations
+  posts     Post[]
+  comments  Comment[]
+  sessions  Session[]
+  auditLogs AuditLog[]
+  likes     Like[]
+  bookmarks Bookmark[]
+
+  @@index([discordId])
+  @@index([email])
+}
+
+// ============================================
+// SESSIONS (for JWT/session management)
+// ============================================
+
+model Session {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  revoked   Boolean  @default(false)
+
+  userAgent String?
+  ipAddress String?
+
+  @@index([token])
+  @@index([userId])
+}
+
+// ============================================
+// BLOG - POSTS
+// ============================================
+
+model Post {
+  id            String  @id @default(cuid())
+  slug          String  @unique
+  title         String
+  content       String  @db.Text
+  excerpt       String? @db.Text
+  featuredImage String?
+
+  // Status & visibility
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  isFeatured  Boolean   @default(false)
+  viewCount   Int       @default(0)
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String?
+
+  // Relations
+  authorId String
+  author   User          @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  comments Comment[]
+  tags     TagsOnPosts[]
+
+  // Timestamps
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  postCategories PostCategory[]
+  likes          Like[]
+  bookmarks      Bookmark[]
+
+  @@index([slug])
+  @@index([authorId])
+  @@index([published, publishedAt])
+}
+
+// ============================================
+// BLOG - COMMENTS
+// ============================================
+
+model Comment {
+  id         String  @id @default(cuid())
+  content    String  @db.Text
+  isApproved Boolean @default(false)
+
+  // Relations
+  authorId String
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  postId   String
+  post     Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentId String? // For nested comments
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  Comment[] @relation("CommentReplies")
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([postId])
+  @@index([authorId])
+  @@index([parentId])
+}
+
+// ============================================
+// BLOG - TAGS
+// ============================================
+
+model Tag {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  slug        String  @unique
+  description String?
+
+  // Relations
+  posts TagsOnPosts[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+model TagsOnPosts {
+  id     String @id @default(cuid())
+  tagId  String
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  assignedAt DateTime @default(now())
+
+  @@unique([tagId, postId])
+  @@index([tagId])
+  @@index([postId])
+}
+
+// ============================================
+// BLOG - CATEGORIES
+// ============================================
+
+model Category {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  slug        String  @unique
+  description String?
+  icon        String?
+
+  // Self-referencing for nested categories
+  parentId String?
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryHierarchy")
+
+  // Relations
+  posts PostCategory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([parentId])
+}
+
+model PostCategory {
+  id         String   @id @default(cuid())
+  postId     String
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  assignedAt DateTime @default(now())
+
+  @@unique([postId, categoryId])
+  @@index([postId])
+  @@index([categoryId])
+}
+
+// ============================================
+// LIKES / REACTIONS
+// ============================================
+
+model Like {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([postId])
+  @@index([userId])
+}
+
+// ============================================
+// BOOKMARKS / SAVED POSTS
+// ============================================
+
+model Bookmark {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([postId])
+  @@index([userId])
+}
+
+// ============================================
+// AUDIT LOGS
+// ============================================
+
+model AuditLog {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  action    String // e.g., "LOGIN", "CREATE_POST", "UPDATE_USER"
+  details   Json? // Additional context
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// ============================================
+// SETTINGS (optional)
+// ============================================
+
+model Setting {
+  id          String  @id @default(cuid())
+  key         String  @unique
+  value       Json
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
