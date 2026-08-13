@@ -1,0 +1,10 @@
+name: Keep Render API Alive
+on:
+  schedule:
+    - cron: "*/14 * * * *"
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Backend API
+        run: curl -sSf https://odyssey-q7ed.onrender.com/api/health
