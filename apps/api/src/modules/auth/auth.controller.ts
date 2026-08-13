@@ -88,6 +88,13 @@ export class AuthController {
     const user = req.user;
     const frontendUrl = this.configService.get('FRONTEND_URL');
     const tokens = await this.authService.generateToken(user!);
+    res.cookie('refresh_token', tokens.refreshToken, {
+      httpOnly: true,
+      secure: this.configService.get('NODE_ENV') === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     return res.redirect(
       `${frontendUrl}/auth/callback?token=${tokens.accessToken}`,
     );
@@ -155,16 +162,29 @@ export class AuthController {
     type: ErrorResponseDto,
   })
   async refreshToken(
-    @Body() body: RefreshTokenDto,
-  ): Promise<TokensResponseDto> {
-    if (!body.refreshToken) {
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const refreshToken = req.cookies['refresh_token'];
+    if (!refreshToken) {
       throw new BadRequestException('Refresh token is required');
     }
 
     try {
-      const tokens = await this.authService.refreshTokens(body.refreshToken);
-      return tokens;
+      const tokens = await this.authService.refreshTokens(refreshToken);
+
+      res.cookie('refresh_token', tokens.refreshToken, {
+        httpOnly: true,
+        secure: this.configService.get('NODE_ENV') === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        path: '/api/auth/refresh',
+      });
+      return { accessToken: tokens.accessToken };
     } catch (error) {
+      res.clearCookie('refresh_token', {
+        path: '/api/auth/refresh',
+      });
       throw new UnauthorizedException('Invalid refresh token');
     }
   }

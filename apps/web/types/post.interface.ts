@@ -33,7 +33,7 @@ export interface Post {
     id: string;
     username: string;
     displayName: string;
-    avatarUrl?: string;
+    discordId: string;
     discordAvatar: string | null;
   };
   tags: Array<{ tag: { id: string; name: string; slug: string } }>;

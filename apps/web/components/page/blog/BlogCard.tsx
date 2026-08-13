@@ -37,7 +37,7 @@ export function BlogCard({ post }: { post: Post }) {
           <div className="flex items-center gap-2">
             <img
               src={getDiscordAvatarUrl(
-                post.author.id,
+                post.author.discordId,
                 post.author.discordAvatar,
               )}
               alt={post.author.displayName}
