@@ -6,11 +6,14 @@ class HttpClient {
 
   private constructor() {
     this.client = axios.create({
-      baseURL: process.env.BACKEND_URL || "http://localhost:3001/api",
+      baseURL:
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api` ||
+        "http://localhost:3001/api",
       timeout: 30000,
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     });
 
     // Request interceptor
@@ -26,15 +29,47 @@ class HttpClient {
       (error) => Promise.reject(error),
     );
 
+    let isRefreshing = false;
+    let failedQueue: any[] = [];
     // Response interceptor
     this.client.interceptors.response.use(
       (response) => response,
-      (error) => {
-        if (error.response?.status === 401) {
-          // Xử lý logout hoặc refresh token
-          console.log("Unauthorized - Redirect to login");
+      async (error) => {
+        const originalRequest = error.config;
+        if (error.response?.status !== 401 || originalRequest._retry) {
+          return Promise.reject(error);
         }
-        return Promise.reject(error);
+        originalRequest._retry = true;
+
+        if (isRefreshing) {
+          return new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject });
+          }).then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return this.client(originalRequest);
+          });
+        }
+        isRefreshing = true;
+
+        try {
+          const response = await this.client.post(`auth/refresh`);
+
+          const newAccessToken = response.data.accessToken;
+          localStorage.setItem("access_token", newAccessToken);
+
+          failedQueue.forEach((prom) => prom.resolve(newAccessToken));
+          failedQueue = [];
+
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          return this.client(originalRequest);
+        } catch (refreshError) {
+          failedQueue.forEach((prom) => prom.reject(refreshError));
+          failedQueue = [];
+          // window.location.href = "/login";
+          return Promise.reject(refreshError);
+        } finally {
+          isRefreshing = false;
+        }
       },
     );
   }
@@ -47,7 +82,6 @@ class HttpClient {
   }
 
   private getToken(): string | null {
-    // Lấy token từ localStorage (client-side) hoặc cookie
     if (typeof window !== "undefined") {
       return localStorage.getItem("access_token");
     }
