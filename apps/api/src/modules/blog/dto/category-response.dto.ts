@@ -2,13 +2,13 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CategoryResponseDto {
   @ApiProperty()
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  name: string;
+  name!: string;
 
   @ApiProperty()
-  slug: string;
+  slug!: string;
 
   @ApiPropertyOptional()
   description?: string;
@@ -20,8 +20,8 @@ export class CategoryResponseDto {
   parentId?: string;
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt!: Date;
 
   @ApiProperty()
-  updatedAt: Date;
+  updatedAt!: Date;
 }

@@ -18,17 +18,4 @@ export class PrismaService
   async onModuleInit() {}
 
   async onModuleDestroy() {}
-
-  // Helper method for clean database (useful for testing)
-  async cleanDatabase() {
-    if (this.configService.get<string>('NODE_ENV') === 'production') {
-      throw new Error('Cannot clean database in production!');
-    }
-
-    const models = Reflect.ownKeys(this).filter(
-      (key) => key[0] !== '_' && key[0] !== '$' && key !== 'constructor',
-    );
-
-    return Promise.all(models.map((modelKey) => this[modelKey].deleteMany()));
-  }
 }

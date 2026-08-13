@@ -31,6 +31,7 @@ import {
   VerifyTokenDto,
   VerifyTokenResponseDto,
 } from './auth.dto.js';
+import { isError } from '../../utils/error.utils.js';
 
 @Controller('auth')
 export class AuthController {
@@ -211,7 +212,7 @@ export class AuthController {
   })
   async verifyToken(
     @Body() body: VerifyTokenDto,
-  ): Promise<VerifyTokenResponseDto> {
+  ): Promise<VerifyTokenResponseDto | undefined> {
     if (!body.token) {
       throw new BadRequestException('Token is required');
     }
@@ -223,10 +224,12 @@ export class AuthController {
         payload,
       };
     } catch (error) {
-      return {
-        valid: false,
-        message: error.message || 'Invalid token',
-      };
+      if (isError(error)) {
+        return {
+          valid: false,
+          message: error.message || 'Invalid token',
+        };
+      }
     }
   }
 

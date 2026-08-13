@@ -20,9 +20,6 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": { "@/*": ["src/*"] }
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+    "noFallthroughCasesInSwitch": false
+  }
 }

@@ -1,9 +1,9 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateDiscordUserDto } from './dto/create-user.dto.js';
-import { User } from 'src/generated/prisma/client.js';
 import { UserService } from '../user/user.service.js';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { User } from '../../generated/prisma/client.js';
 
 @Injectable()
 export class AuthService {

@@ -2,26 +2,26 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CommentResponseDto {
   @ApiProperty()
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  content: string;
+  content!: string;
 
   @ApiProperty()
-  isApproved: boolean;
+  isApproved!: boolean;
 
   @ApiProperty()
-  authorId: string;
+  authorId!: string;
 
   @ApiProperty()
-  postId: string;
+  postId!: string;
 
   @ApiPropertyOptional()
   parentId?: string;
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt!: Date;
 
   @ApiProperty()
-  updatedAt: Date;
+  updatedAt!: Date;
 }
