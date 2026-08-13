@@ -1,7 +1,7 @@
 export class CreateDiscordUserDto {
-  displayName: string | null = null;
+  displayName!: string | null;
   username!: string;
-  discordAvatar: string | null = null;
+  discordAvatar!: string | null;
   discordEmail?: string;
   // guilds?: any[];
   discordId!: string;

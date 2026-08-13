@@ -26,7 +26,7 @@ import {
 import { BlogService } from './blog.service.js';
 import { CreatePostDto } from './dto/create-post.dto.js';
 import { UpdatePostDto } from './dto/update-post.dto.js';
-import { CreateCommentDto } from './dto/create-comment.dto.js';
+import { CreateCommentDto } from './dto/create-comment.dto';
 import { CreateTagDto } from './dto/create-tag.dto.js';
 import type {
   Post as PostEntity,
@@ -39,6 +39,7 @@ import { TagResponseDto } from './dto/tag-response.dto.js';
 import { CommentResponseDto } from './dto/comment-reponse.dto.js';
 import { CategoryResponseDto } from './dto/category-response.dto.js';
 import { AuthGuard } from '@nestjs/passport';
+import { isError } from '../../utils/error.utils.js';
 
 // Mock guard (replace with your actual auth guard)
 // import { AuthGuard } from '@nestjs/passport';
@@ -64,7 +65,7 @@ export class BlogController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(AuthGuard('jwt'))
   async createPost(@Req() req: any, @Body() createPostDto: CreatePostDto) {
-    const userId = req.user?.id || 'test-user-id';
+    const userId = req.user.id;
     return this.blogService.createPost(userId, createPostDto);
   }
 
@@ -239,10 +240,12 @@ export class BlogController {
     try {
       return await this.blogService.createTag(createTagDto);
     } catch (error) {
-      if (error.code === 'P2002') {
-        throw new ConflictException('Tag already exists');
+      if (isError(error)) {
+        // if (error.code === 'P2002') {
+        //   throw new ConflictException('Tag already exists');
+        // }
+        throw error;
       }
-      throw error;
     }
   }
 

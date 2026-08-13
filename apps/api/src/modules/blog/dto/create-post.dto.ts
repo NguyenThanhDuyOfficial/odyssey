@@ -12,12 +12,12 @@ export class CreatePostDto {
   @ApiProperty({ description: 'Post title' })
   @IsString()
   @IsNotEmpty()
-  title: string;
+  title!: string;
 
   @ApiProperty({ description: 'Post content (HTML)' })
   @IsString()
   @IsNotEmpty()
-  content: string;
+  content!: string;
 
   @ApiPropertyOptional({ description: 'Post excerpt/summary' })
   @IsString()
