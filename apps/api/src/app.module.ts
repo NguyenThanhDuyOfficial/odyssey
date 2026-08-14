@@ -10,12 +10,25 @@ import path from 'node:path';
 import { JwtService } from '@nestjs/jwt';
 import { BlogModule } from './modules/blog/blog.module.js';
 import { UserModule } from './modules/user/user.module.js';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guards/role.guard.js';
+import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard.js';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: path.resolve(process.cwd(), '../../.env'),
+    }),
+    ThrottlerModule.forRootAsync({
+      useFactory: () => ({
+        throttlers: [
+          { name: 'short', ttl: 1000, limit: 10 },
+          { name: 'medium', ttl: 10000, limit: 30 },
+          { name: 'long', ttl: 60000, limit: 100 },
+        ],
+      }),
     }),
     AuthModule,
     BlogModule,

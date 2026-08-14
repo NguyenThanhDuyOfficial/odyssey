@@ -32,6 +32,7 @@ import {
   VerifyTokenResponseDto,
 } from './auth.dto.js';
 import { isError } from '../../utils/error.utils.js';
+import { JwtAuthGuard } from './guards/jwt-auth.guard.js';
 
 @Controller('auth')
 export class AuthController {
@@ -88,7 +89,7 @@ export class AuthController {
   async discordCallback(@Req() req: Request, @Res() res: Response) {
     const user = req.user;
     const frontendUrl = this.configService.get('FRONTEND_URL');
-    const tokens = await this.authService.generateToken(user!);
+    const tokens = await this.authService.generateToken(user);
     res.cookie('refresh_token', tokens.refreshToken, {
       httpOnly: true,
       secure: this.configService.get('NODE_ENV') === 'production',
@@ -252,7 +253,6 @@ export class AuthController {
     description: 'Unauthorized - Invalid or missing token',
     type: ErrorResponseDto,
   })
-  @UseGuards(AuthGuard('jwt'))
   async logout(@Req() req: Request): Promise<MessageResponseDto> {
     const user = req.user as any;
 

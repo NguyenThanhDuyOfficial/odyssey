@@ -7,13 +7,12 @@ import {
   Body,
   Param,
   Query,
-  UseGuards,
   Req,
   HttpCode,
   HttpStatus,
   ParseIntPipe,
   DefaultValuePipe,
-  ConflictException,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -22,53 +21,53 @@ import {
   ApiBearerAuth,
   ApiQuery,
   ApiParam,
+  ApiCreatedResponse,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { BlogService } from './blog.service.js';
-import { CreatePostDto } from './dto/create-post.dto.js';
-import { UpdatePostDto } from './dto/update-post.dto.js';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { CreateTagDto } from './dto/create-tag.dto.js';
-import type {
-  Post as PostEntity,
-  Comment as CommentEntity,
-  Tag as TagEntity,
-  Category as CategoryEntity,
-} from '../../generated/prisma/client.js';
-import { PostResponseDto } from './dto/post-response.dto.js';
-import { TagResponseDto } from './dto/tag-response.dto.js';
-import { CommentResponseDto } from './dto/comment-reponse.dto.js';
-import { CategoryResponseDto } from './dto/category-response.dto.js';
-import { AuthGuard } from '@nestjs/passport';
+import { BlogService } from './blog.service';
 import { isError } from '../../utils/error.utils.js';
+import {
+  CreatePostDto,
+  UpdatePostDto,
+  CreateCommentDto,
+  CreateTagDto,
+  PostResponseDto,
+  TagResponseDto,
+  CommentResponseDto,
+  CategoryResponseDto,
+} from './dto/index';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import type { AuthUser } from 'src/shared/interfaces/auth-user.interface';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
-// Mock guard (replace with your actual auth guard)
-// import { AuthGuard } from '@nestjs/passport';
-// import { RolesGuard } from '../auth/guards/roles.guard';
-
-@ApiTags('Blog')
+@ApiTags('Blogs')
 @Controller('blog')
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
-  // ============================================
-  // POSTS
-  // ============================================
-
   @Post('posts')
-  @ApiOperation({ summary: 'Create a new post' })
   @ApiBearerAuth('JWT-auth')
-  @ApiResponse({
-    status: 201,
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: 'Create a new post',
+    description:
+      'Create a new blog post with the provided data. The user must be authenticated',
+  })
+  @ApiCreatedResponse({
     description: 'Post created successfully',
     type: PostResponseDto,
   })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @UseGuards(AuthGuard('jwt'))
-  async createPost(@Req() req: any, @Body() createPostDto: CreatePostDto) {
-    const userId = req.user.id;
-    return this.blogService.createPost(userId, createPostDto);
+  @ApiUnauthorizedResponse({
+    description: 'User not authenticated',
+  })
+  async createPost(
+    @Body() createPostDto: CreatePostDto,
+    @CurrentUser() user: AuthUser,
+  ): Promise<PostResponseDto> {
+    return this.blogService.createPost(user.id, createPostDto);
   }
 
+  //TODO: improve code
   @Get('posts')
   @ApiOperation({ summary: 'Get all posts with pagination and filtering' })
   @ApiQuery({

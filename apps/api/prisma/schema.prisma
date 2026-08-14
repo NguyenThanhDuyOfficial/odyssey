@@ -8,12 +8,17 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
+}
+
 model User {
   id          String  @id @default(cuid())
-  email       String?
   username    String  @unique
   displayName String?
-  avatarUrl   String?
+  role        Role    @default(USER)
 
   // Discord OAuth fields
   discordId     String?   @unique
@@ -24,10 +29,9 @@ model User {
   tokenExpiry   DateTime?
 
   // Timestamps
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  lastLoginAt   DateTime?
-  emailVerified Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastLoginAt DateTime?
 
   // Relations
   posts     Post[]
@@ -38,7 +42,6 @@ model User {
   bookmarks Bookmark[]
 
   @@index([discordId])
-  @@index([email])
 }
 
 // ============================================

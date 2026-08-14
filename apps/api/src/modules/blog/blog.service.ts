@@ -9,6 +9,8 @@ import { UpdatePostDto } from './dto/update-post.dto.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
 import { CreateTagDto } from './dto/create-tag.dto.js';
 import { Prisma } from '../../generated/prisma/client.js';
+import { PostResponseDto } from './dto/post-response.dto.js';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class BlogService {
@@ -17,78 +19,35 @@ export class BlogService {
   async createPost(userId: string, createPostDto: CreatePostDto) {
     const { tags, categories, ...postData } = createPostDto;
 
-    // Generate slug from title
     const slug = this.generateSlug(postData.title);
 
-    return this.prisma.post.create({
-      data: {
-        ...postData,
-        slug,
-        authorId: userId,
-        publishedAt: postData.published ? new Date() : null,
-        tags: tags?.length
-          ? {
-              create: tags.map((tagId) => ({
-                tag: { connect: { id: tagId } },
-              })),
-            }
-          : undefined,
-        postCategories: categories?.length
-          ? {
-              create: categories.map((categoryId) => ({
-                category: { connect: { id: categoryId } },
-              })),
-            }
-          : undefined,
-      },
-      include: {
-        author: {
-          select: {
-            id: true,
-            username: true,
-            displayName: true,
-            avatarUrl: true,
-          },
+    const post = await this.prisma.$transaction(async (tx) => {
+      return tx.post.create({
+        data: {
+          ...postData,
+          slug,
+          authorId: userId,
+          publishedAt: postData.published ? new Date() : null,
+          tags: tags?.length
+            ? {
+                create: tags.map((tagId) => ({
+                  tag: { connect: { id: tagId } },
+                })),
+              }
+            : undefined,
+          postCategories: categories?.length
+            ? {
+                create: categories.map((categoryId) => ({
+                  category: { connect: { id: categoryId } },
+                })),
+              }
+            : undefined,
         },
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-        postCategories: {
-          include: {
-            category: true,
-          },
-        },
-        comments: {
-          where: { isApproved: true },
-          include: {
-            author: {
-              select: {
-                id: true,
-                username: true,
-                displayName: true,
-                avatarUrl: true,
-              },
-            },
-            replies: {
-              include: {
-                author: {
-                  select: {
-                    id: true,
-                    username: true,
-                    displayName: true,
-                    avatarUrl: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-        likes: true,
-        bookmarks: true,
-      },
+        include: this.getPostIncludeOptions(),
+      });
     });
+    const responseDto = this.transformToResponseDto(post);
+    return responseDto;
   }
 
   async findAllPosts(params: {
@@ -212,7 +171,6 @@ export class BlogService {
             id: true,
             username: true,
             displayName: true,
-            avatarUrl: true,
           },
         },
         tags: {
@@ -233,7 +191,6 @@ export class BlogService {
                 id: true,
                 username: true,
                 displayName: true,
-                avatarUrl: true,
               },
             },
             replies: {
@@ -243,7 +200,6 @@ export class BlogService {
                     id: true,
                     username: true,
                     displayName: true,
-                    avatarUrl: true,
                   },
                 },
               },
@@ -322,7 +278,6 @@ export class BlogService {
             id: true,
             username: true,
             displayName: true,
-            avatarUrl: true,
           },
         },
         tags: {
@@ -396,7 +351,6 @@ export class BlogService {
             id: true,
             username: true,
             displayName: true,
-            avatarUrl: true,
           },
         },
         replies: {
@@ -406,7 +360,6 @@ export class BlogService {
                 id: true,
                 username: true,
                 displayName: true,
-                avatarUrl: true,
               },
             },
           },
@@ -569,7 +522,6 @@ export class BlogService {
                 id: true,
                 username: true,
                 displayName: true,
-                avatarUrl: true,
               },
             },
             tags: {
@@ -597,5 +549,66 @@ export class BlogService {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
+  }
+  private getPostIncludeOptions() {
+    return {
+      author: {
+        select: {
+          id: true,
+          username: true,
+          displayName: true,
+        },
+      },
+      tags: {
+        include: {
+          tag: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
+      },
+      postCategories: {
+        include: {
+          category: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
+      },
+      _count: {
+        select: {
+          comments: {
+            where: { isApproved: true },
+          },
+          likes: true,
+          bookmarks: true,
+        },
+      },
+    };
+  }
+  private transformToResponseDto(post: any): PostResponseDto {
+    const { _count, ...postData } = post;
+
+    const transformed = {
+      ...postData,
+      commentCount: _count?.comments || 0,
+      likeCount: _count?.likes || 0,
+      bookmarkCount: _count?.bookmarks || 0,
+      tags: postData.tags?.map((tagRelation: any) => tagRelation.tag) || [],
+      categories:
+        postData.postCategories?.map(
+          (categoryRelation: any) => categoryRelation.category,
+        ) || [],
+    };
+
+    return plainToInstance(PostResponseDto, transformed, {
+      excludeExtraneousValues: true,
+    });
   }
 }

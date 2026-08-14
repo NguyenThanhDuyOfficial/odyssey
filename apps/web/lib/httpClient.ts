@@ -16,10 +16,8 @@ class HttpClient {
       withCredentials: true,
     });
 
-    // Request interceptor
     this.client.interceptors.request.use(
       (config) => {
-        // Thêm token nếu có
         const token = this.getToken();
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
@@ -31,7 +29,7 @@ class HttpClient {
 
     let isRefreshing = false;
     let failedQueue: any[] = [];
-    // Response interceptor
+
     this.client.interceptors.response.use(
       (response) => response,
       async (error) => {
@@ -65,7 +63,7 @@ class HttpClient {
         } catch (refreshError) {
           failedQueue.forEach((prom) => prom.reject(refreshError));
           failedQueue = [];
-          // window.location.href = "/login";
+          window.location.href = "/login";
           return Promise.reject(refreshError);
         } finally {
           isRefreshing = false;
