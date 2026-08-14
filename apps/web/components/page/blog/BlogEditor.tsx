@@ -71,20 +71,12 @@ export function BlogEditor({
   }
 
   return (
-    <div>
-      <Toolbar editor={editor} />
-      <div className="p-4 space-y-4">
-        <input
-          id="title"
-          type="text"
-          placeholder="Tiêu đề"
-          required
-          value={title}
-          onChange={handleTitleChange}
-          className="border-none rounded-none text-3xl font-bold outline-none"
-        />
-        <EditorContent editor={editor} />
-      </div>
+    <div className="w-full h-full">
+      <Toolbar
+        editor={editor}
+        className="sticky top-16 left-0 z-100 bg-background "
+      />
+      <EditorContent editor={editor} className="overflow-y-auto" />
     </div>
   );
 }

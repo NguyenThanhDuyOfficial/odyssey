@@ -104,10 +104,6 @@ export const useBlogStore = create<BlogState>()(
     (set, get) => ({
       ...initialState,
 
-      // ============================================
-      // POSTS
-      // ============================================
-
       fetchPosts: async () => {
         set({ isLoading: true, error: null }, false, "blog/fetchPosts");
         try {

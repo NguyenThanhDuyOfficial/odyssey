@@ -52,12 +52,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface ToolbarProps {
   editor: Editor;
+  className?: string;
 }
 
-export function Toolbar({ editor }: ToolbarProps) {
+export function Toolbar({ editor, className }: ToolbarProps) {
   const [linkUrl, setLinkUrl] = useState("");
   const [isLinkPopoverOpen, setIsLinkPopoverOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -111,7 +113,9 @@ export function Toolbar({ editor }: ToolbarProps) {
   );
 
   return (
-    <div className="flex flex-wrap items-center gap-0.5 p-2 border-b bg-muted/10">
+    <div
+      className={`flex flex-wrap items-center gap-0.5 p-2 border-b ${className}`}
+    >
       {/* Headings Dropdown */}
       <DropdownMenu>
         <DropdownMenuTrigger
