@@ -63,7 +63,6 @@ class HttpClient {
         } catch (refreshError) {
           failedQueue.forEach((prom) => prom.reject(refreshError));
           failedQueue = [];
-          window.location.href = "/login";
           return Promise.reject(refreshError);
         } finally {
           isRefreshing = false;
