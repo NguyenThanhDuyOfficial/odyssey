@@ -11,7 +11,7 @@
     "dev:api": "pnpm --filter api dev",
     "build": "pnpm run --parallel build",
     "build:web": "pnpm --filter web build",
-    "build:api": "pnpm --filter api build",
+    "build:api": "pnpm --filter @odyssey/api build",
     "lint": "pnpm run --paralled lint",
     "clean": "pnpm -r exec rm -rf node_modules .next distt",
     "test": "echo \"Error: no test specified\""

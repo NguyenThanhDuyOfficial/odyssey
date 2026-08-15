@@ -23,6 +23,10 @@ import {
   ApiParam,
   ApiCreatedResponse,
   ApiUnauthorizedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiBadGatewayResponse,
+  ApiBadRequestResponse,
 } from '@nestjs/swagger';
 import { BlogService } from './blog.service';
 import { isError } from '../../utils/error.utils.js';
@@ -35,10 +39,13 @@ import {
   TagResponseDto,
   CommentResponseDto,
   CategoryResponseDto,
+  PaginatedCommentsResponseDto,
+  GetCommentQueryDto,
 } from './dto/index';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import type { AuthUser } from 'src/shared/interfaces/auth-user.interface';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import type { RequestWithUser } from 'src/common/interfaces/request.interface';
 
 @ApiTags('Blogs')
 @Controller('blog')
@@ -186,25 +193,80 @@ export class BlogController {
   // COMMENTS
   // ============================================
 
+  @Get('posts/:postId/comments')
+  @ApiOperation({
+    summary: 'Get paginated comments for a post',
+    description: `
+      Returns top-level comments with cursor-based pagination.
+      Supports multiple sort options and user-specific like status.
+    `,
+  })
+  @ApiParam({
+    name: 'postId',
+    description: 'ID of the post',
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    type: String,
+  })
+  @ApiQuery({
+    name: 'sortBy',
+    enum: ['newest', 'mostVoted'],
+    default: 'newest',
+    description: 'Sort order for comments',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: Number,
+    default: 20,
+    minimum: 1,
+    maximum: 50,
+    description: 'Number of comments to fetch (max 50)',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'cursor',
+    type: String,
+    required: false,
+    description:
+      'Cursor for pagination (base64 encoded from previous response)',
+    example:
+      'eyJjcmVhdGVkX2F0IjoiMjAyNi0wOC0xNVQxMDozMDowMC4wMDBaIiwiaWQiOiJjb21tZW50LTEyMyJ9',
+  })
+  @ApiOkResponse({
+    description: 'Comments retrieved successfully',
+    type: PaginatedCommentsResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'Post not found',
+  })
+  @ApiBadRequestResponse({
+    description: 'Invalid query parameters',
+  })
+  async getComments(
+    @Param('postId') postId: string,
+    @Query() query: GetCommentQueryDto,
+    @CurrentUser() user: AuthUser,
+  ): Promise<PaginatedCommentsResponseDto> {
+    return this.blogService.getComments(user?.id, postId, query);
+  }
+
   @Post('posts/:postId/comments')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
   @ApiOperation({ summary: 'Add a comment to a post' })
-  @ApiBearerAuth()
   @ApiParam({ name: 'postId', description: 'Post ID' })
-  @ApiResponse({
-    status: 201,
+  @ApiCreatedResponse({
     description: 'Comment created successfully',
     type: CommentResponseDto,
   })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiResponse({ status: 404, description: 'Post not found' })
-  // @UseGuards(AuthGuard('jwt'))
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiNotFoundResponse({ description: 'Post not found' })
   async createComment(
-    @Req() req: any,
+    @CurrentUser() user: AuthUser,
     @Param('postId') postId: string,
     @Body() createCommentDto: CreateCommentDto,
   ) {
-    const userId = req.user?.id || 'test-user-id';
-    return this.blogService.createComment(userId, postId, createCommentDto);
+    return this.blogService.createComment(user.id, postId, createCommentDto);
   }
 
   @Delete('comments/:id')

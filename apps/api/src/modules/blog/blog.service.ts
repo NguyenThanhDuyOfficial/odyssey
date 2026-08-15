@@ -4,12 +4,17 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
-import { CreatePostDto } from './dto/create-post.dto.js';
-import { UpdatePostDto } from './dto/update-post.dto.js';
-import { CreateCommentDto } from './dto/create-comment.dto.js';
-import { CreateTagDto } from './dto/create-tag.dto.js';
+import {
+  CreatePostDto,
+  UpdatePostDto,
+  CreateCommentDto,
+  CreateTagDto,
+  PostResponseDto,
+  PaginatedCommentsResponseDto,
+  CommentResponseDto,
+  GetCommentQueryDto,
+} from './dto/index';
 import { Prisma } from '../../generated/prisma/client.js';
-import { PostResponseDto } from './dto/post-response.dto.js';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
@@ -193,17 +198,6 @@ export class BlogService {
                 displayName: true,
               },
             },
-            replies: {
-              include: {
-                author: {
-                  select: {
-                    id: true,
-                    username: true,
-                    displayName: true,
-                  },
-                },
-              },
-            },
           },
         },
         likes: true,
@@ -324,12 +318,11 @@ export class BlogService {
   // ============================================
   // COMMENTS
   // ============================================
-
-  async createComment(
+  async getComments(
     userId: string,
     postId: string,
-    createCommentDto: CreateCommentDto,
-  ) {
+    query: GetCommentQueryDto,
+  ): Promise<PaginatedCommentsResponseDto> {
     const post = await this.prisma.post.findUnique({
       where: { id: postId },
     });
@@ -338,12 +331,147 @@ export class BlogService {
       throw new NotFoundException('Post not found');
     }
 
-    return this.prisma.comment.create({
+    const { cursor, limit = 20, sortBy = 'newest' } = query;
+
+    let orderBy: any;
+    if (sortBy === 'newest') {
+      orderBy = { createdAt: 'desc' };
+    } else if (sortBy === 'mostVoted') {
+      orderBy = [{ vote: 'desc' }, { createdAt: 'desc' }, { id: 'asc' }];
+    } else {
+      orderBy = { createdAt: 'desc' };
+    }
+
+    let where: any = {
+      postId: postId,
+    };
+
+    if (cursor) {
+      let cursorData: any = { id: cursor };
+      if (sortBy === 'newest') {
+        where.OR = [
+          { createdAt: { lt: new Date(cursorData.createdAt) } },
+          {
+            AND: [
+              { createdAt: { equals: new Date(cursorData.createdAt) } },
+              { id: { gt: cursorData.id } },
+            ],
+          },
+        ];
+      } else if (sortBy === 'mostVoted') {
+        where.OR = [
+          { vote: { lt: cursorData.vote } },
+          {
+            AND: [
+              { vote: { equals: cursorData.vote } },
+              { createdAt: { lt: new Date(cursorData.createdAt) } },
+            ],
+          },
+          {
+            AND: [
+              { vote: { equals: cursorData.vote } },
+              { createdAt: { equals: new Date(cursorData.createdAt) } },
+              { id: { gt: cursorData.id } },
+            ],
+          },
+        ];
+      } else {
+        where.id = { gt: cursorData.id };
+      }
+    }
+
+    const comments = await this.prisma.comment.findMany({
+      where,
+      take: limit + 1,
+      orderBy,
+      include: {
+        author: {
+          select: {
+            id: true,
+            displayName: true,
+            discordAvatar: true,
+          },
+        },
+      },
+    });
+    let likedCommentIds = new Set<string>();
+
+    if (userId && comments.length > 0) {
+      const commentIds = comments.map((c) => c.id);
+
+      const likes = await this.prisma.commentLike.findMany({
+        where: {
+          commentId: { in: commentIds },
+          userId: userId,
+        },
+        select: { commentId: true },
+      });
+
+      likedCommentIds = new Set(likes.map((like) => like.commentId));
+    }
+    const hasMore = comments.length > limit;
+    const data = hasMore ? comments.slice(0, -1) : comments;
+
+    let nextCursor: string | null = null;
+
+    if (hasMore && data.length > 0) {
+      const lastItem = data[data.length - 1];
+
+      let cursorData: any = { id: lastItem.id };
+
+      if (sortBy === 'newest' || sortBy === 'oldest') {
+        cursorData.createdAt = lastItem.createdAt;
+      } else if (sortBy === 'mostVoted') {
+        cursorData.vote_count = lastItem.vote;
+        cursorData.createdAt = lastItem.createdAt;
+      }
+
+      nextCursor = Buffer.from(JSON.stringify(cursorData)).toString('base64');
+    }
+    const responseData: CommentResponseDto[] = data.map((comment) => ({
+      id: comment.id,
+      content: comment.content,
+      postId: comment.postId,
+      isApproved: comment.isApproved,
+      author: {
+        id: comment.author.id,
+        displayName: comment.author.displayName,
+        discordAvatar: comment.author.discordAvatar,
+      },
+      vote: comment.vote || 0,
+      isLiked: userId ? likedCommentIds.has(comment.id) : false,
+      createdAt: comment.createdAt,
+      updatedAt: comment.updatedAt,
+    }));
+
+    // ============================================
+    // 9. RETURN RESPONSE
+    // ============================================
+    return {
+      data: responseData,
+      nextCursor: nextCursor,
+      hasMore: hasMore,
+    };
+  }
+  async createComment(
+    userId: string,
+    postId: string,
+    createCommentDto: CreateCommentDto,
+  ): Promise<CommentResponseDto> {
+    const post = await this.prisma.post.findUnique({
+      where: { id: postId },
+    });
+
+    if (!post) {
+      throw new NotFoundException('Post not found');
+    }
+
+    const comment = await this.prisma.comment.create({
       data: {
         ...createCommentDto,
         authorId: userId,
         postId,
-        isApproved: true, // Set to false if moderation is needed
+        isApproved: true,
       },
       include: {
         author: {
@@ -353,19 +481,19 @@ export class BlogService {
             displayName: true,
           },
         },
-        replies: {
-          include: {
-            author: {
-              select: {
-                id: true,
-                username: true,
-                displayName: true,
-              },
-            },
-          },
-        },
       },
     });
+    const response: CommentResponseDto = {
+      id: comment.id,
+      content: comment.content,
+      postId: comment.postId,
+      isApproved: comment.isApproved,
+      vote: 0,
+      isLiked: false,
+      createdAt: comment.createdAt,
+      updatedAt: comment.updatedAt,
+    };
+    return response;
   }
 
   async deleteComment(id: string, userId: string) {

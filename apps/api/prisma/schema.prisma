@@ -34,12 +34,13 @@ model User {
   lastLoginAt DateTime?
 
   // Relations
-  posts     Post[]
-  comments  Comment[]
-  sessions  Session[]
-  auditLogs AuditLog[]
-  likes     Like[]
-  bookmarks Bookmark[]
+  posts       Post[]
+  comments    Comment[]
+  sessions    Session[]
+  auditLogs   AuditLog[]
+  likes       Like[]
+  commentLike CommentLike[]
+  bookmarks   Bookmark[]
 
   @@index([discordId])
 }
@@ -114,15 +115,15 @@ model Comment {
   id         String  @id @default(cuid())
   content    String  @db.Text
   isApproved Boolean @default(false)
+  vote       Int     @default(0)
 
   // Relations
   authorId String
-  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   postId   String
-  post     Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
-  parentId String? // For nested comments
-  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
-  replies  Comment[] @relation("CommentReplies")
+  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  commentLikes CommentLike[]
 
   // Timestamps
   createdAt DateTime @default(now())
@@ -130,7 +131,6 @@ model Comment {
 
   @@index([postId])
   @@index([authorId])
-  @@index([parentId])
 }
 
 // ============================================
@@ -209,6 +209,20 @@ model PostCategory {
 // ============================================
 // LIKES / REACTIONS
 // ============================================
+
+model CommentLike {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  commentId String
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, commentId])
+  @@index([userId])
+  @@index([commentId])
+}
 
 model Like {
   id     String @id @default(cuid())

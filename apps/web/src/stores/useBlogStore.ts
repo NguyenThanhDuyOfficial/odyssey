@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { blogService } from "@/services/blogService";
+import { blogService, GetCommentsParams } from "@/services/blogService";
 import {
   Post,
   Comment,
@@ -47,7 +47,7 @@ interface BlogState {
   deletePost: (id: string) => Promise<void>;
 
   // Actions - Comments
-  fetchComments: (postId: string) => Promise<void>;
+  fetchComments: (postId: string, params: GetCommentsParams) => Promise<void>;
   createComment: (postId: string, data: CreateCommentDto) => Promise<Comment>;
   deleteComment: (id: string) => Promise<void>;
 
@@ -247,13 +247,13 @@ export const useBlogStore = create<BlogState>()(
       // COMMENTS
       // ============================================
 
-      fetchComments: async (postId: string) => {
+      fetchComments: async (postId: string, params: GetCommentsParams) => {
         set({ isLoading: true }, false, "blog/fetchComments");
         try {
-          const post = await blogService.getPostBySlug(postId);
+          const post = await blogService.getComments(postId, params);
           set(
             {
-              comments: post.comments || [],
+              comments: post.data || [],
               isLoading: false,
             },
             false,

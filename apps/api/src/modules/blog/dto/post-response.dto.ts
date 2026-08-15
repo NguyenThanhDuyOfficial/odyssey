@@ -1,7 +1,8 @@
 import { UserResponseDto } from '../../auth/auth.dto.js';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { TagResponseDto } from './tag-response.dto.js';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { PaginatedCommentsResponseDto } from './comment.dto.js';
 
 export class PostResponseDto {
   @Expose()
@@ -68,7 +69,6 @@ export class PostResponseDto {
   @ApiProperty()
   updatedAt!: Date;
 
-  // For relationships, you might need nested DTOs
   @Expose()
   @ApiPropertyOptional({ type: () => UserResponseDto })
   author?: UserResponseDto;

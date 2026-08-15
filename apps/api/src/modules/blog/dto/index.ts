@@ -1,6 +1,5 @@
 export * from './category-response.dto';
-export * from './comment-reponse.dto';
-export * from './create-comment.dto';
+export * from './comment.dto';
 export * from './create-post.dto';
 export * from './create-tag.dto';
 export * from './index';

@@ -14,8 +14,32 @@ import {
   LikeResponse,
   BookmarkResponse,
 } from "@/types/post.interface";
+export interface GetCommentsParams {
+  sortBy?: "newest" | "mostVoted";
+  cursor?: string;
+  limit?: number;
+}
 
 export const blogService = {
+  async getComments(
+    postId: string,
+    params: GetCommentsParams = {},
+  ): Promise<any> {
+    const { sortBy = "newest", cursor, limit = 20 } = params;
+
+    const queryParams = new URLSearchParams({
+      sortBy,
+      cursor: String(cursor),
+      limit: String(limit),
+    });
+
+    const response = await HttpClient.get(
+      `/blog/posts/${postId}/comments?${queryParams.toString()}`,
+    );
+    console.log("blogServce", response);
+    return response.data;
+  },
+
   // ============================================
   // POSTS
   // ============================================
