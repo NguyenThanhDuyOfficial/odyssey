@@ -90,12 +90,12 @@ export class AuthController {
     const user = req.user;
     const frontendUrl = this.configService.get('FRONTEND_URL');
     const tokens = await this.authService.generateToken(user);
+    const isProduction = this.configService.get('NODE_ENV') === 'production';
     res.cookie('refresh_token', tokens.refreshToken, {
       httpOnly: true,
-      secure: this.configService.get('NODE_ENV') === 'production',
-      sameSite: 'lax',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      path: '/auth/refresh',
     });
 
     return res.redirect(
