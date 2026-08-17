@@ -55,7 +55,7 @@ export default function NewPostPage() {
           <Button onClick={handlePublish} size="lg">
             Đăng bài
           </Button>
-          <Button>Lưu</Button>
+          {/* <Button>Lưu</Button> */}
         </div>
       </div>
     </div>

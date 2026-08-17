@@ -35,8 +35,8 @@ export default function BlogPostClient({ slug }: { slug: any }) {
   return (
     <>
       <Header />
-      <div className="main">
-        <article className="container">
+      <div className="main ">
+        <article className="container max-w-screen">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors mb-6 group"
@@ -161,7 +161,7 @@ export default function BlogPostClient({ slug }: { slug: any }) {
             </div>
           </footer>
         </article>
-        <Comments />
+        {/* <Comments /> */}
       </div>
     </>
   );

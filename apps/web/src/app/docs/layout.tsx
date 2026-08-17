@@ -7,12 +7,12 @@ import { ThemeProvider } from "@teispace/next-themes";
 
 export default function Layout({ children }: LayoutProps<"/docs">) {
   return (
-    <ThemeProvider>
-      <RootProvider>
+    <RootProvider>
+      <ThemeProvider>
         <DocsLayout tree={source.getPageTree()} {...baseOptions()}>
           {children}
         </DocsLayout>
-      </RootProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </RootProvider>
   );
 }

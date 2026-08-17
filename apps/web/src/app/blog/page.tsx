@@ -76,23 +76,23 @@ export default function BlogPage({
             độc nhất, kiến thức thú vị cho mọi người và cho bản thân.
           </p>
           <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
-            <Form
-              action="/search"
-              className="border-2 border-primary rounded-lg overflow-hidden"
-            >
-              <input
-                className="flex-1 p-2 outline-none"
-                name="query"
-                type="text"
-                placeholder="Tìm kiếm..."
-              />
-              <button
-                type="submit"
-                className="h-full p-2 rounded-none bg-primary text-primary-foreground hover:bg-primary/80"
-              >
-                Tìm
-              </button>
-            </Form>
+            {/* TODO: <Form */}
+            {/*   action="/search" */}
+            {/*   className="border-2 border-primary rounded-lg overflow-hidden" */}
+            {/* > */}
+            {/*   <input */}
+            {/*     className="flex-1 p-2 outline-none" */}
+            {/*     name="query" */}
+            {/*     type="text" */}
+            {/*     placeholder="Tìm kiếm..." */}
+            {/*   /> */}
+            {/*   <button */}
+            {/*     type="submit" */}
+            {/*     className="h-full p-2 rounded-none bg-primary text-primary-foreground hover:bg-primary/80" */}
+            {/*   > */}
+            {/*     Tìm */}
+            {/*   </button> */}
+            {/* </Form> */}
             <Button onClick={() => router.push("/blog/new")}>Đăng bài</Button>
           </div>
         </section>
