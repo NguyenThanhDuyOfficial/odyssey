@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import Image from "next/image";
 import Header from "@/components/page/Header";
+import Comments from "@/components/comments/Comments";
 
 export default function BlogPostClient({ slug }: { slug: any }) {
   const { fetchPostBySlug, currentPost } = useBlogStore();
@@ -160,6 +161,7 @@ export default function BlogPostClient({ slug }: { slug: any }) {
             </div>
           </footer>
         </article>
+        <Comments />
       </div>
     </>
   );

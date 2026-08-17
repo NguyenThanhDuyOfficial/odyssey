@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto, Playwrite_VN } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@teispace/next-themes";
 
 const roboto = Roboto({
   subsets: ["latin", "vietnamese"],
@@ -25,9 +25,9 @@ export default function RootLayout({
       className={`${roboto.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* <ThemeProvider attribute="class" defaultTheme="light"> */}
-        {children}
-        {/* </ThemeProvider> */}
+        <ThemeProvider attribute="class" defaultTheme="light">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
