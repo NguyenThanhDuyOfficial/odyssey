@@ -38,6 +38,9 @@ export default function NewPostPage() {
           </div>
         )}
         <div>
+          <Button onClick={handlePublish} size="lg">
+            Đăng bài
+          </Button>
           <input
             type="text"
             placeholder="Nhập tiêu đề ở đây..."
@@ -51,12 +54,12 @@ export default function NewPostPage() {
         </div>
         <BlogEditor onChange={(data) => setPostData(data)} />
 
-        <div className="absolute bottom-10 left-16">
-          <Button onClick={handlePublish} size="lg">
-            Đăng bài
-          </Button>
-          {/* <Button>Lưu</Button> */}
-        </div>
+        {/* <div className="absolute bottom-10 left-16"> */}
+        {/*   <Button onClick={handlePublish} size="lg"> */}
+        {/*     Đăng bài */}
+        {/*   </Button> */}
+        {/* <Button>Lưu</Button> */}
+        {/* </div> */}
       </div>
     </div>
   );

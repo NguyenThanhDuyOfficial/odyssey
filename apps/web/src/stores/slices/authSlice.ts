@@ -16,7 +16,7 @@ export const createAuthSlice: StateCreator<AuthStore, [], [], AuthSlice> = (
   accessToken: null,
   isAuthenticated: false,
 
-  loginWithDiscord: () => {
+  loginWithDiscord: async () => {
     window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/discord`;
   },
 

@@ -18,9 +18,11 @@ import type { Request, Response } from 'express';
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiInternalServerErrorResponse,
   ApiOperation,
   ApiQuery,
   ApiResponse,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import {
   ErrorResponseDto,
@@ -41,6 +43,7 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
+  // LOGIN //
   @Get('discord')
   @UseGuards(AuthGuard('discord'))
   @ApiOperation({
@@ -51,8 +54,7 @@ export class AuthController {
     status: 302,
     description: 'Redirect to Discord login page',
   })
-  @ApiResponse({
-    status: 500,
+  @ApiInternalServerErrorResponse({
     description: 'Internal server error',
     type: ErrorResponseDto,
   })
@@ -65,24 +67,11 @@ export class AuthController {
     description:
       'Handle Discord OAuth2 callback and redirect to frontend with token',
   })
-  @ApiQuery({
-    name: 'code',
-    description: 'Authorization code from Discord',
-    required: true,
-    example: 'abc123def456',
-  })
-  @ApiQuery({
-    name: 'state',
-    description: 'State parameter from Discord',
-    required: false,
-    example: 'random_state_string',
-  })
   @ApiResponse({
     status: 302,
     description: 'Redirect to frontend with JWT tokens',
   })
-  @ApiResponse({
-    status: 401,
+  @ApiUnauthorizedResponse({
     description: 'Unauthorized',
     type: ErrorResponseDto,
   })
